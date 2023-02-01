@@ -1,0 +1,28 @@
+{
+  "name": "entega-5",
+  "version": "1.0.0",
+  "description": "Formulário de cadastro de clientes e contatos",
+  "main": "index.js",
+  "author": "Wendel Bueres",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.9.0",
+    "@types/node": "^18.11.18",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "prisma": "^4.9.0",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "build": "tsc",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=1234 jest",
+    "start": "node dist/src/server.js"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.16",
+    "ts-node-dev": "^2.0.0"
+  }
+}
