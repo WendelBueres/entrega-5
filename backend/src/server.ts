@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 (async () => {
-  const port = 3000;
+  const port = 8000;
 
   await prisma.$connect();
 
