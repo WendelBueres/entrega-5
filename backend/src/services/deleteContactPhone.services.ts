@@ -14,11 +14,7 @@ const deleteContactPhoneService = async (id: number) => {
     throw new AppError("Contact not found.");
   }
 
-  if (contact.userId === id) {
-    return await prisma.contactPhone.delete({ where: { id: id } });
-  }
-
-  throw new AppError("Contact not found.");
+  return await prisma.contactPhone.delete({ where: { id: id } });
 };
 
 export default deleteContactPhoneService;
