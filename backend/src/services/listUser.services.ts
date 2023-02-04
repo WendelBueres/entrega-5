@@ -4,7 +4,7 @@ import { AppError } from "../errors";
 const prisma = new PrismaClient();
 
 const listUserService = async () => {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({ orderBy: { name: "asc" } });
 
   return users;
 };
