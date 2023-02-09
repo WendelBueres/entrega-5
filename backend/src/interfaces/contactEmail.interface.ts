@@ -1,5 +1,7 @@
+import { IUserRequest } from "./user.interface";
+
 export interface IContactEmailRequest {
-  id: number;
+  id?: number;
   email: string;
-  userId: number;
+  contactId: number;
 }
