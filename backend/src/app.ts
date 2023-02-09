@@ -5,6 +5,8 @@ import "express-async-errors";
 import userRoutes from "./routes/user.router";
 import contactEmailRoutes from "./routes/contactEmail.router";
 import contactPhoneRoutes from "./routes/contactPhone.router";
+import contactRouter from "./routes/contact.router";
+import loginRouter from "./routes/login.router";
 const app = express();
 
 app.use((req, res, next) => {
@@ -15,6 +17,8 @@ app.use((req, res, next) => {
   app.use("/users", userRoutes);
   app.use("/email", contactEmailRoutes);
   app.use("/phone", contactPhoneRoutes);
+  app.use("/contact", contactRouter);
+  app.use("/login", loginRouter);
   app.use(handleErrorMidleware);
   next();
 });
