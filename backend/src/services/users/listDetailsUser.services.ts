@@ -1,24 +1,22 @@
 import { PrismaClient } from "@prisma/client";
-import { AppError } from "../errors";
+import { AppError } from "../../errors";
+import { IUserResponse } from "../../interfaces/userResponse.interface";
 
 const prisma = new PrismaClient();
 
 const listDetailsUserService = async (id: number) => {
-  const userExist = await prisma.user.findUnique({
+  const user: IUserResponse | null = await prisma.user.findUnique({
     where: {
       id: id,
     },
     include: {
-      ContactEmail: true,
-      ContactPhone: true,
+      contacts: true,
     },
   });
 
-  if (!userExist) {
-    throw new AppError("User not found.");
-  }
+  delete user?.password;
 
-  return userExist;
+  return user;
 };
 
 export default listDetailsUserService;
