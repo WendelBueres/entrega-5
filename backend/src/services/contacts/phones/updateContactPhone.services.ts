@@ -6,8 +6,13 @@ const prisma = new PrismaClient();
 
 const updateContactPhoneService = async (
   data: IContactPhoneRequest,
-  id: number
+  id: number,
+  userId: number
 ) => {
+  if (!data.phone) {
+    throw new AppError("field phone is required");
+  }
+
   const regex =
     /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/;
 
@@ -19,14 +24,23 @@ const updateContactPhoneService = async (
     );
   }
 
-  const contact = await prisma.contactPhone.update({
+  const phone = await prisma.contactPhone.findUnique({ where: { id: id } });
+  const contact = await prisma.contact.findFirstOrThrow({
+    where: { id: phone?.contactId, userId: userId },
+  });
+
+  if (!contact) {
+    throw new AppError("contact email not found", 404);
+  }
+
+  const contactUpdate = await prisma.contactPhone.update({
     where: { id: id },
     data: {
       phone: data.phone,
     },
   });
 
-  return contact;
+  return contactUpdate;
 };
 
 export default updateContactPhoneService;

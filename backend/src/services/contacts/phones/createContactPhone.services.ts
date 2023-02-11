@@ -4,7 +4,10 @@ import { IContactPhoneRequest } from "../../../interfaces/contactPhone.interface
 
 const prisma = new PrismaClient();
 
-const createContactPhoneService = async (data: IContactPhoneRequest) => {
+const createContactPhoneService = async (
+  data: IContactPhoneRequest,
+  userId: number
+) => {
   let fieldsRequireds = ["contactId", "phone"];
   const keys = Object.keys(data);
 
@@ -23,6 +26,14 @@ const createContactPhoneService = async (data: IContactPhoneRequest) => {
     throw new AppError(
       "provide a valid phone, in format (XX) XXXX-XXXX or (XX) XXXXX-XXXX"
     );
+  }
+
+  const contactExists = await prisma.contact.findFirstOrThrow({
+    where: { id: data.contactId, userId: userId },
+  });
+
+  if (!contactExists) {
+    throw new AppError("Contact not found", 404);
   }
 
   const contact = await prisma.contactPhone.create({

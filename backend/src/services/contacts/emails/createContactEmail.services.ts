@@ -4,7 +4,10 @@ import { IContactEmailRequest } from "../../../interfaces/contactEmail.interface
 
 const prisma = new PrismaClient();
 
-const createContactEmailService = async (data: IContactEmailRequest) => {
+const createContactEmailService = async (
+  data: IContactEmailRequest,
+  userId: number
+) => {
   let fieldsRequireds = ["contactId", "email"];
   const keys = Object.keys(data);
 
@@ -21,6 +24,14 @@ const createContactEmailService = async (data: IContactEmailRequest) => {
 
   if (!isEmail) {
     throw new AppError("provide a valid email");
+  }
+
+  const contactExists = await prisma.contact.findFirstOrThrow({
+    where: { id: data.contactId, userId: userId },
+  });
+
+  if (!contactExists) {
+    throw new AppError("Contact not found", 404);
   }
 
   const contact = await prisma.contactEmail.create({

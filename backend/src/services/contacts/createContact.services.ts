@@ -6,7 +6,7 @@ import { IContactPhoneRequest } from "../../interfaces/contactPhone.interface";
 
 const prisma = new PrismaClient();
 
-const createContactService = async (data: IContactRequest) => {
+const createContactService = async (data: IContactRequest, userId: number) => {
   let fieldsRequireds = ["name", "userId"];
   const keys = Object.keys(data);
 
@@ -19,11 +19,20 @@ const createContactService = async (data: IContactRequest) => {
   const contact = await prisma.contact.create({
     data: {
       name: data.name,
-      user: { connect: { id: data.userId } },
+      user: { connect: { id: userId } },
     },
   });
 
   if (data.email) {
+    const regex =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi;
+
+    let isEmail = regex.test(data.email);
+
+    if (!isEmail) {
+      throw new AppError("provide a valid email");
+    }
+
     const email: IContactEmailRequest = await prisma.contactEmail.create({
       data: {
         email: data.email,
@@ -33,6 +42,17 @@ const createContactService = async (data: IContactRequest) => {
   }
 
   if (data.phone) {
+    const regex =
+      /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/;
+
+    let isPhone = regex.test(data.phone);
+
+    if (!isPhone) {
+      throw new AppError(
+        "provide a valid phone, in format (XX) XXXX-XXXX or (XX) XXXXX-XXXX"
+      );
+    }
+
     const phone: IContactPhoneRequest = await prisma.contactPhone.create({
       data: {
         phone: data.phone,

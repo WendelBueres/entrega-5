@@ -35,6 +35,7 @@ const createSessionServices = async (data: ILogin) => {
   const token = jwt.sign(
     {
       userId: id,
+      userName: user.name,
     },
     process.env.SECRET_KEY as string,
     {
