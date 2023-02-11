@@ -31,6 +31,13 @@ export default function TabComponent() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    handleClose();
+    navigate("/");
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -99,7 +106,7 @@ export default function TabComponent() {
             <Avatar /> Minha Conta
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => handleLogout()}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
