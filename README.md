@@ -31,6 +31,11 @@ Esse projeto teve seu Front-End programado em TypeScript por meio do framework R
 
 Para a aplicação funcionar corretamente os dois terminais devem ficar em execução.
 
+### Testes parcialmente implementados
+- Acesse a pasta do Front-End por meio do comando: ```cd frontend```.
+- Execute por meio do comando: ```yarn test```.
+
 ### Endereços da aplicação:
 - frontend: localhost:3000
 - backend: localhost:8000
+
