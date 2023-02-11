@@ -30,7 +30,7 @@ export function Router() {
         path="contact/email/:id/edit"
         element={<EditContactEmail />}
       ></Route>
-      ;
+      <Route path="*" element={<Login />}></Route>;
     </Routes>
   );
 }
