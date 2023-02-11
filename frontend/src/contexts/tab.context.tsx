@@ -20,6 +20,7 @@ interface ITabContext {
 export const TabContext = createContext<ITabContext>({} as ITabContext);
 
 export const TabProvider = ({ children }: ITabContextChildren) => {
+  const token = localStorage.getItem("@kcontacts:token");
   const [valueTab, setValueTab] = useState(-1);
   const navigate = useNavigate();
 
@@ -37,11 +38,11 @@ export const TabProvider = ({ children }: ITabContextChildren) => {
   }, [valueTab]);
 
   useEffect(() => {
-    if (isHome) {
+    if (isHome && token) {
       setValueTab(1);
     }
 
-    if (isRegisterClient) {
+    if (isRegisterClient && token) {
       setValueTab(0);
     }
   }, [window.location.href]);
