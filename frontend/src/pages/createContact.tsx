@@ -13,14 +13,14 @@ import {
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BarClient from "../components/barClient";
-import { UserDataContext } from "../contexts/userDetails.context";
+import BarClient from "../components/barContact";
+import { ContactDataContext } from "../contexts/ContactData.context";
 import api from "../services/api";
 
 export default function CreateContact() {
   const navigate = useNavigate();
   const params = useParams();
-  const { setId } = useContext(UserDataContext);
+  const { setId } = useContext(ContactDataContext);
 
   async function handleSubmit(e: React.BaseSyntheticEvent) {
     e.preventDefault();
@@ -32,23 +32,17 @@ export default function CreateContact() {
       id = +params.id;
     }
     if (email) {
-      let data = { userId: id, email: contact };
+      let data = { contactId: id, email: contact };
       await api
         .post(`email`, data)
         .then((response) => {
           toast.success("Contato cadastrado com sucesso!");
           setId(undefined);
-          navigate(`/user/${id}`);
+          navigate(`/contact/${id}`);
         })
         .catch((error) => {
           if (error.response.data.message === "provide a valid email") {
             toast.error("Digite um email com formato válido.");
-          } else if (
-            error.response.data.message === "email is already registered"
-          ) {
-            toast.error(
-              "Esse email já se encontra cadastrado para algum cliente."
-            );
           } else {
             toast.error("Ops, algo deu errado!");
           }
@@ -56,11 +50,11 @@ export default function CreateContact() {
     }
     if (phone) {
       await api
-        .post(`phone`, { userId: id, phone: contact })
+        .post(`phone`, { contactId: id, phone: contact })
         .then((response) => {
           toast.success("Contato cadastrado com sucesso!");
           setId(undefined);
-          navigate(`/user/${id}`);
+          navigate(`/contact/${id}`);
         })
         .catch((error) => {
           if (
@@ -68,12 +62,6 @@ export default function CreateContact() {
             "provide a valid phone, in format (XX) XXXX-XXXX or (XX) XXXXX-XXXX"
           ) {
             toast.error("Digite um telefone com formato válido.");
-          } else if (
-            error.response.data.message === "phone is already registered"
-          ) {
-            toast.error(
-              "Esse telefone já se encontra cadastrado para algum cliente."
-            );
           } else {
             toast.error("Ops, algo deu errado!");
           }

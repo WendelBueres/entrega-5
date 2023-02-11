@@ -8,14 +8,14 @@ import {
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BarClient from "../components/barClient";
-import { UserDataContext } from "../contexts/userDetails.context";
+import BarClient from "../components/barContact";
+import { ContactDataContext } from "../contexts/ContactData.context";
 import api from "../services/api";
 
 export default function EditContactPhone() {
   const navigate = useNavigate();
   const params = useParams();
-  const { setId } = useContext(UserDataContext);
+  const { setId } = useContext(ContactDataContext);
 
   async function handleSubmit(e: React.BaseSyntheticEvent) {
     e.preventDefault();

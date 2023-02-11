@@ -1,11 +1,12 @@
 import { Container } from "@mui/system";
+import { Typography } from "@mui/material";
 import { useContext } from "react";
 import CardClient from "../components/cardClient";
 import TabComponent from "../components/tab.component";
 import { UserListContext } from "../contexts/userList.context";
 
 export default function ListUsers() {
-  const { response } = useContext(UserListContext);
+  const { dataContacts } = useContext(UserListContext);
 
   return (
     <>
@@ -21,10 +22,19 @@ export default function ListUsers() {
           mb: 5,
         }}
       >
-        {response &&
-          response.map((user) => (
+        {dataContacts &&
+          dataContacts.map((user) => (
             <CardClient key={user.id} id={user.id} name={user.name} />
           ))}
+        {dataContacts.length === 0 && (
+          <Container
+            sx={{
+              mt: 8,
+            }}
+          >
+            <Typography variant="h4">Nenhum contato cadastrado...</Typography>
+          </Container>
+        )}
       </Container>
     </>
   );

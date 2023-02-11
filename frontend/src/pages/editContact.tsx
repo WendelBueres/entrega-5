@@ -14,38 +14,22 @@ import { ContactDataContext } from "../contexts/ContactData.context";
 import { UserListContext } from "../contexts/userList.context";
 import api from "../services/api";
 
-export default function EditUser() {
+export default function EditContact() {
+  const { response, setResponse, setId } = useContext(ContactDataContext);
+  const { getUsers } = useContext(UserListContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  const { setId } = useContext(ContactDataContext);
-  const { response, setResponse } = useContext(UserListContext);
 
   async function handleSubmit(e: React.BaseSyntheticEvent) {
     e.preventDefault();
-    let data = {};
     let name: string = e.target[0].value;
-    let email: string = e.target[1].value;
-    let senha: string = e.target[2].value;
-
-    if (senha) {
-      data = {
-        name: name,
-        email: email,
-        password: senha,
-      };
-    } else {
-      data = {
-        name: name,
-        email: email,
-      };
-    }
 
     await api
-      .patch(`users/`, data)
+      .patch(`contact/${id}`, { name: name })
       .then((response) => {
         toast.success("Cadastro editado com sucesso!");
         setResponse(response.data);
-        navigate(`/contacts/`);
+        navigate(`/contact/${id}`);
       })
       .catch((error) => {
         toast.error("Ops, algo deu errado!");
@@ -54,11 +38,12 @@ export default function EditUser() {
 
   async function handleDelete() {
     await api
-      .delete(`users/${id}`)
+      .delete(`contact/${id}`)
       .then(async (response) => {
-        toast.success("Cadastro apagado com sucesso!");
+        toast.success("Contato apagado com sucesso!");
         setId(undefined);
-        navigate(`/`);
+        getUsers();
+        navigate(`/contacts`);
       })
       .catch((error) => {
         toast.error("Ops, algo deu errado!");
@@ -98,26 +83,6 @@ export default function EditUser() {
                 sx={{ color: "white", width: "calc(450px + 2vmin)" }}
                 defaultValue={response?.name}
                 required
-              />
-            </FormControl>
-            <FormControl variant="filled" focused sx={{ mt: 5 }}>
-              <InputLabel htmlFor="email" required>
-                E-mail
-              </InputLabel>
-              <FilledInput
-                id="email"
-                sx={{ color: "white", width: "calc(450px + 2vmin)" }}
-                defaultValue={response?.email}
-                required
-              />
-            </FormControl>
-            <FormControl variant="filled" focused sx={{ mt: 5 }}>
-              <InputLabel htmlFor="password">Senha</InputLabel>
-              <FilledInput
-                id="password"
-                type="password"
-                sx={{ color: "white", width: "calc(450px + 2vmin)" }}
-                defaultValue=""
               />
             </FormControl>
             <Button

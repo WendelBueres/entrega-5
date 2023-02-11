@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserDataContext } from "../contexts/userDetails.context";
-import BarClient from "../components/barClient";
+import { ContactDataContext } from "../contexts/ContactData.context";
+import BarClient from "../components/barContact";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EditIcon from "@mui/icons-material/Edit";
@@ -19,8 +19,8 @@ import Container from "@mui/material/Container";
 import api from "../services/api";
 import { toast } from "react-toastify";
 
-export default function DataUser() {
-  const { response, setId } = useContext(UserDataContext);
+export default function DataContact() {
+  const { response, setId } = useContext(ContactDataContext);
   const { id } = useParams();
   const navigate = useNavigate();
   setId(id);
@@ -64,8 +64,8 @@ export default function DataUser() {
           Email
         </Typography>
         <List sx={{ mt: 2 }}>
-          {response?.ContactEmail.length ? (
-            response?.ContactEmail.map((contact) => {
+          {response?.ContactEmail?.length ? (
+            response?.ContactEmail?.map((contact) => {
               return (
                 <ListItem
                   sx={{ padding: "14px 0px 12px 0px" }}
@@ -132,8 +132,8 @@ export default function DataUser() {
           Telefone
         </Typography>
         <List sx={{ mt: 2 }}>
-          {response?.ContactPhone.length ? (
-            response?.ContactPhone.map((contact) => {
+          {response?.ContactPhone?.length ? (
+            response?.ContactPhone?.map((contact) => {
               return (
                 <ListItem
                   sx={{ padding: "14px 0px 12px 0px" }}
