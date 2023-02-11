@@ -20,19 +20,19 @@ interface ITabContext {
 export const TabContext = createContext<ITabContext>({} as ITabContext);
 
 export const TabProvider = ({ children }: ITabContextChildren) => {
-  const [valueTab, setValueTab] = useState(1);
+  const [valueTab, setValueTab] = useState(-1);
   const navigate = useNavigate();
 
-  const isHome = useMatch("/");
-  const isRegisterClient = useMatch("/register-client");
+  const isHome = useMatch("/contacts");
+  const isRegisterClient = useMatch("/register-contact");
 
   useEffect(() => {
     if (valueTab === 1) {
-      navigate("/");
+      navigate("/contacts");
     }
 
     if (valueTab === 0) {
-      navigate("/register-client");
+      navigate("/register-contact");
     }
   }, [valueTab]);
 
@@ -44,7 +44,7 @@ export const TabProvider = ({ children }: ITabContextChildren) => {
     if (isRegisterClient) {
       setValueTab(0);
     }
-  }, []);
+  }, [window.location.href]);
 
   return (
     <TabContext.Provider value={{ valueTab, setValueTab }}>

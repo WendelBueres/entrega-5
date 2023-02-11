@@ -22,9 +22,17 @@ interface IUserList {
   updatedAt: string;
 }
 
+interface IResponse {
+  id: number;
+  name: string;
+  email: string;
+}
+
 interface IUserListContext {
-  response: IUserList[];
-  setResponse: Dispatch<SetStateAction<never[]>>;
+  response: IResponse | undefined;
+  setResponse: Dispatch<SetStateAction<undefined>>;
+  id: undefined | number;
+  dataContacts: IUserList[] | never[];
   getUsers(): Promise<void>;
 }
 
@@ -33,27 +41,33 @@ export const UserListContext = createContext<IUserListContext>(
 );
 
 export const UserListProvider = ({ children }: IUserListContextChildren) => {
-  const [response, setResponse] = useState([]);
+  const [response, setResponse] = useState();
+  const [id, setId] = useState();
+  const [dataContacts, setDataContacts] = useState([]);
   const { valueTab } = useContext(TabContext);
 
   async function getUsers() {
     if (valueTab === 1) {
       const { data } = await toast.promise(api.get("users/"), {
-        pending: "Carregando lista de clientes ⌚",
-        success: "Lista de clientes carregada 😎",
+        pending: "Carregando lista de contatos ⌚",
+        success: "Lista de contatos carregada 😎",
         error: "Ops, algo deu errado 🤦‍♂️",
       });
       setResponse(data);
+      setDataContacts(data.contacts);
+      setId(data.id);
     }
   }
 
   useEffect(() => {
-    setResponse([]);
+    setResponse(undefined);
     getUsers();
   }, [valueTab]);
 
   return (
-    <UserListContext.Provider value={{ getUsers, response, setResponse }}>
+    <UserListContext.Provider
+      value={{ getUsers, response, setResponse, dataContacts, id }}
+    >
       {children}
     </UserListContext.Provider>
   );
