@@ -54,7 +54,7 @@ export default function EditUser() {
 
   async function handleDelete() {
     await api
-      .delete(`users/${id}`)
+      .delete(`users`)
       .then(async (response) => {
         toast.success("Cadastro apagado com sucesso!");
         setId(undefined);
