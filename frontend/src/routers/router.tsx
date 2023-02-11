@@ -1,21 +1,26 @@
 import { Route, Routes } from "react-router-dom";
 import CreateContact from "../pages/createContact";
-import DataUser from "../pages/dataUser";
+import DataContact from "../pages/dataContact";
+import EditContact from "../pages/editContact";
 import EditContactEmail from "../pages/editContactEmail";
 import EditContactPhone from "../pages/editContactPhone";
 import EditUser from "../pages/editUser";
-import FormUser from "../pages/formUser";
-
 import ListUsers from "../pages/listUsers";
+import Login from "../pages/login";
+import RegisterContact from "../pages/registerContact";
+import RegisterUser from "../pages/registerUser";
 
 export function Router() {
   return (
     <Routes>
-      <Route path="/" element={<ListUsers />}></Route>;
-      <Route path="/register-client" element={<FormUser />}></Route>;
-      <Route path="user/:id" element={<DataUser />}></Route>;
-      <Route path="user/:id/contact" element={<CreateContact />}></Route>;
-      <Route path="user/:id/edit" element={<EditUser />}></Route>;
+      <Route path="/" element={<Login />}></Route>;
+      <Route path="/contacts" element={<ListUsers />}></Route>;
+      <Route path="/register-user" element={<RegisterUser />}></Route>;
+      <Route path="/register-contact" element={<RegisterContact />}></Route>;
+      <Route path="contact/:id" element={<DataContact />}></Route>;
+      <Route path="/contact/:id/created" element={<CreateContact />}></Route>;
+      <Route path="contact/:id/edit" element={<EditContact />}></Route>;
+      <Route path="user/edit" element={<EditUser />}></Route>;
       <Route
         path="contact/phone/:id/edit"
         element={<EditContactPhone />}
