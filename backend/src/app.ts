@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { handleErrorMidleware } from "./middlewares/handleError.midleware";
+import { handleErrorMiddleware } from "./middlewares/handleError.middleware";
 import "express-async-errors";
 import userRoutes from "./routes/user.router";
 import contactEmailRoutes from "./routes/contactEmail.router";
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   app.use("/phone", contactPhoneRoutes);
   app.use("/contact", contactRouter);
   app.use("/login", loginRouter);
-  app.use(handleErrorMidleware);
+  app.use(handleErrorMiddleware);
   next();
 });
 
