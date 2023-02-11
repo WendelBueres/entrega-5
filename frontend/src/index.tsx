@@ -7,20 +7,23 @@ import { BrowserRouter } from "react-router-dom";
 import { TabProvider } from "./contexts/tab.context";
 import "react-toastify/dist/ReactToastify.min.css";
 import { UserListProvider } from "./contexts/userList.context";
-import { UserDataProvider } from "./contexts/userDetails.context";
+import { ContactDataProvider } from "./contexts/ContactData.context";
+import { AuthProvider } from "./contexts/auth.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <BrowserRouter>
-    <TabProvider>
-      <UserListProvider>
-        <UserDataProvider>
-          <App />
-        </UserDataProvider>
-      </UserListProvider>
-    </TabProvider>
+    <AuthProvider>
+      <TabProvider>
+        <UserListProvider>
+          <ContactDataProvider>
+            <App />
+          </ContactDataProvider>
+        </UserListProvider>
+      </TabProvider>
+    </AuthProvider>
   </BrowserRouter>
 );
 
