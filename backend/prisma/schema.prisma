@@ -33,7 +33,7 @@ model Contact {
 
 model ContactEmail {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
+  email     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
@@ -42,7 +42,7 @@ model ContactEmail {
 
 model ContactPhone {
   id        Int      @id @default(autoincrement())
-  phone     String   @unique
+  phone     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
