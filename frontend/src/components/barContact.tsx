@@ -5,19 +5,19 @@ import HomeIcon from "@mui/icons-material/Home";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { UserDataContext } from "../contexts/userDetails.context";
+import { ContactDataContext } from "../contexts/ContactData.context";
 import { UserListContext } from "../contexts/userList.context";
 
-interface IBarClient {
+interface IBarContact {
   add?: boolean;
   edit?: boolean;
   home?: boolean;
 }
 
-export default function BarClient({ add, edit, home }: IBarClient) {
+export default function BarContact({ add, edit, home }: IBarContact) {
   const { getUsers } = useContext(UserListContext);
   const navigate = useNavigate();
-  const { response, setId, id } = useContext(UserDataContext);
+  const { response, setId, id } = useContext(ContactDataContext);
 
   return (
     <div className="containerMenu">
@@ -52,7 +52,7 @@ export default function BarClient({ add, edit, home }: IBarClient) {
               },
             }}
             onClick={() => {
-              navigate(`/user/${id}/edit`);
+              navigate(`edit`);
             }}
           >
             <EditIcon />
@@ -71,8 +71,8 @@ export default function BarClient({ add, edit, home }: IBarClient) {
               },
             }}
             onClick={() => {
+              navigate(`created`);
               setId(undefined);
-              navigate(`contact`);
             }}
           >
             <AddIcon />
@@ -114,7 +114,7 @@ export default function BarClient({ add, edit, home }: IBarClient) {
             onClick={async () => {
               setId(undefined);
               await getUsers();
-              navigate("/");
+              navigate("/contacts");
             }}
           >
             <HomeIcon />
