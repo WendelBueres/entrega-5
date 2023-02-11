@@ -32,7 +32,7 @@ Esse projeto teve seu Front-End programado em TypeScript por meio do framework R
 Para a aplicação funcionar corretamente os dois terminais devem ficar em execução.
 
 ### Testes parcialmente implementados
-- Acesse a pasta do Front-End por meio do comando: ```cd frontend```.
+- Acesse a pasta do Front-End por meio do comando: ```cd backend```.
 - Execute por meio do comando: ```yarn test```.
 
 ### Endereços da aplicação:
