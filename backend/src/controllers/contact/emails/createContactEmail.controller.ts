@@ -6,21 +6,12 @@ import createContactEmailService from "../../../services/contacts/emails/createC
 const createContactEmailController = async (req: Request, res: Response) => {
   try {
     const data = req.body;
+    const { userId } = req.user;
 
-    const contact = await createContactEmailService(data);
-
+    const contact = await createContactEmailService(data, parseInt(userId));
     return res.status(201).json(contact).send();
   } catch (e) {
-    console.log(e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        res
-          .status(400)
-          .json({
-            message: `Unique constraint failed on the ${e.meta?.target}`,
-          })
-          .send();
-      }
       if (e.code === "P2025") {
         res
           .status(404)

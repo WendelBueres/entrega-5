@@ -5,10 +5,11 @@ import listDetailsUserService from "../../services/users/listDetailsUser.service
 
 const listDetailsUserController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const user = await listDetailsUserService(parseInt(id));
+    const { userId } = req.user;
+    const user = await listDetailsUserService(parseInt(userId));
+    const token = req.headers.authorization?.slice(7);
 
-    return res.status(201).json(user).send();
+    return res.status(200).json(user).send();
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2025") {

@@ -1,13 +1,13 @@
 import { Prisma } from "@prisma/client";
 import { Request, Response } from "express";
 import { AppError } from "../../errors";
-import deleteUserService from "../../services/contacts/deleteContact.services";
+import deleteUserService from "../../services/users/deleteUserContact.services";
 
 const deleteUserController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { userId } = req.user;
 
-    await deleteUserService(parseInt(id));
+    await deleteUserService(parseInt(userId));
 
     return res.status(204).send();
   } catch (e) {

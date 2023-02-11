@@ -1,16 +1,15 @@
 import { Prisma } from "@prisma/client";
 import { Request, Response } from "express";
 import { AppError } from "../../errors";
-import updateContactService from "../../services/contacts/updateContact.services";
+import getDetailsContactService from "../../services/contacts/getDetailsContact.services";
 
-const updateContactController = async (req: Request, res: Response) => {
+const getDetailsContactController = async (req: Request, res: Response) => {
   try {
     const data = req.body;
     const { id } = req.params;
     const { userId } = req.user;
 
-    const contact = await updateContactService(
-      data,
+    const contact = await getDetailsContactService(
       parseInt(id),
       parseInt(userId)
     );
@@ -28,4 +27,4 @@ const updateContactController = async (req: Request, res: Response) => {
   }
 };
 
-export default updateContactController;
+export default getDetailsContactController;

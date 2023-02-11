@@ -6,15 +6,15 @@ import deleteContactPhoneService from "../../../services/contacts/phones/deleteC
 const deleteContactPhoneController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const idContact = parseInt(id);
+    const { userId } = req.user;
 
-    await deleteContactPhoneService(idContact);
+    await deleteContactPhoneService(parseInt(id), parseInt(userId));
 
     return res.status(204).send();
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2025") {
-        throw new AppError(`Email not found`, 404);
+        throw new AppError(`Phone not found`, 404);
       }
     }
     if (e instanceof AppError) {

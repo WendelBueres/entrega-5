@@ -6,9 +6,9 @@ import deleteContactEmailService from "../../../services/contacts/emails/deleteC
 const deleteContactEmailController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const idContact = parseInt(id);
+    const { userId } = req.user;
 
-    await deleteContactEmailService(idContact);
+    await deleteContactEmailService(parseInt(id), parseInt(userId));
 
     return res.status(204).send();
   } catch (e) {

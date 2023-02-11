@@ -7,17 +7,19 @@ const updateContactEmailController = async (req: Request, res: Response) => {
   try {
     const data = req.body;
     const { id } = req.params;
+    const { userId } = req.user;
 
-    const contact = await updateContactEmailService(data, parseInt(id));
+    const contact = await updateContactEmailService(
+      data,
+      parseInt(id),
+      parseInt(userId)
+    );
 
-    return res.status(201).json(contact).send();
+    return res.status(200).json(contact).send();
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2025") {
         throw new AppError(`Email not found`, 404);
-      }
-      if (e.code === "P2002") {
-        throw new AppError(`Unique constraint failed on the ${e.meta?.target}`);
       }
     }
     if (e instanceof AppError) {
