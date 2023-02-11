@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
 
-async function handleErrorMidleware(
+async function handleErrorMiddleware(
   error: Error,
   req: Request,
   res: Response,
@@ -20,4 +20,4 @@ async function handleErrorMidleware(
     );
 }
 
-export { handleErrorMidleware };
+export { handleErrorMiddleware };
