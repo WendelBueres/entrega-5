@@ -23,6 +23,7 @@ export default function CardClient({ id, name }: ICardClient) {
         height: "35vh",
         display: "flex",
         alignItems: "center",
+        mt: 2,
       }}
     >
       <CardActionArea
@@ -33,7 +34,7 @@ export default function CardClient({ id, name }: ICardClient) {
           maxWidth: "45vw",
           alignItems: "center",
         }}
-        onClick={() => navigate(`user/${id}/`)}
+        onClick={() => navigate(`/contact/${id}/`)}
       >
         <CardContent
           sx={{
